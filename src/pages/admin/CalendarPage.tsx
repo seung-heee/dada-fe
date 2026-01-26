@@ -40,7 +40,7 @@ const CalendarPage = () => {
     console.log('BE로 보낼 최종 데이터: ', payload)
 
     // 성공 후 navigate
-    navigate('/')
+    navigate(`/create-success/${meetingName}`)
   }
 
 
