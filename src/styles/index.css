@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'MitmiFont';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sweet';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Heavy.woff2') format('woff2');
+    font-weight: 900;
+    font-display: swap;
+}
+
+
+* {
+    box-sizing: border-box;
+    font-family: 'Sweet';
+}
+
+:root {
+    /* --- Brand Colors --- */
+    --primary: oklch(76.5% 0.177 163.223);
+    --primary-dark: oklch(69.6% 0.17 162.48);
+    --secondary-color: #10B981; /* 생동감을 주는 민트 (성공/확정) */
+    --accent-color: #FBBF24; /* 가장 많이 겹치는 날짜(BEST) 강조용 옐로우 */
+    --danger-color: #EF4444; /* 취소/삭제 등 경고용 레드 */
+
+    /* --- Neutral Colors --- */
+    --bg-color: #F9FAFB; /* 전체 배경색 (연회색) */
+    --container-bg: #FFFFFF; /* 중앙 앱 컨테이너 배경색 (순백색) */
+    --text-main: #111827; /* 메인 글자색 */
+    --text-sub: #6B7280; /* 설명글/부제목 글자색 */
+    --border-color: #E5E7EB; /* 경계선 색상 */
+
+    /* --- Layout Sizes --- */
+    --max-width: 768px; /* 최대 폭 (태블릿) */
+    --min-width: 360px; /* 최소 폭 (모바일) */
+    --header-height: 60px; /* 상단 헤더 높이 */
+
+    /* --- Spacing & Radius --- */
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: oklch(98.5% 0.002 247.839);
+}
+
+.app-wrapper {
+    width: 100%;
+    max-width: var(--max-width);
+    min-width: var(--min-width);
+    background-color: var(--container-bg);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+}
+
+.MitmiFont {
+    font-family: MitmiFont;
+}
+
+.customInput {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border-bottom: 1px solid darkgray;
+}
