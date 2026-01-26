@@ -2,6 +2,7 @@ import RootLayout from "@/layout/RootLayout.tsx";
 import OnBoarding from "@/pages/OnBoarding.tsx";
 import {createBrowserRouter} from "react-router";
 import CreateRoomPage from "@/pages/CreateRoomPage.tsx";
+import VotePage from "@/pages/VotePage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -10,6 +11,7 @@ export const router = createBrowserRouter([
     children: [
       {index: true, Component: OnBoarding},
       {path: "create-room", Component: CreateRoomPage},
+      {path: "vote/:roomId", Component: VotePage}
     ]
   },
 ])
