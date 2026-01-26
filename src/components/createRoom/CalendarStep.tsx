@@ -9,7 +9,8 @@ import type {FC} from "react";
 type Props = {
   meetingName: string,
   onPrev: () => void,
-  onNext: (dates: string[]) => void
+  onNext: (dates: string[]) => void,
+  isLoading: boolean
 }
 
 const calendarSchema = z.object({
@@ -20,7 +21,7 @@ const calendarSchema = z.object({
 
 type CalendarFormValues = z.infer<typeof calendarSchema>
 
-const CalendarStep: FC<Props> = ({meetingName, onPrev, onNext}) => {
+const CalendarStep: FC<Props> = ({meetingName, onPrev, onNext, isLoading}) => {
   const {control, handleSubmit} = useForm<CalendarFormValues>({
     resolver: zodResolver(calendarSchema),
     defaultValues: {
@@ -65,6 +66,7 @@ const CalendarStep: FC<Props> = ({meetingName, onPrev, onNext}) => {
                 onPrev={onPrev}
                 onClick={handleSubmit(onSubmit)}
                 disabled={watchedDates.length === 0}
+                isLoading={isLoading}
             />
           </div>
         </form>

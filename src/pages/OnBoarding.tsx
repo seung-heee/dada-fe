@@ -6,7 +6,7 @@ const OnBoarding = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/meeting-name')
+      navigate('/create-room')
     }, 2000)
 
     return () => clearTimeout(timer)
