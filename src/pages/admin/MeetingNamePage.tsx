@@ -30,7 +30,7 @@ const MeetingNamePage = () => {
 
   return (
       <>
-        <Question title='Q. 모임 이름을 알려주세요.'/>
+        <Question title='어떤 모임인가요?'/>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
