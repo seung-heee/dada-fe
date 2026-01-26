@@ -1,9 +1,14 @@
-import Question from "@/components/Question.tsx";
+import z from "zod";
+import Question from "@/components/shared/Question.tsx";
+import BottomButton from "@/components/shared/BottomButton.tsx";
 import {useForm} from "react-hook-form";
-import {z} from "zod";
-import {useNavigate} from "react-router";
 import {zodResolver} from "@hookform/resolvers/zod";
-import BottomButton from "@/components/BottomButton.tsx";
+import type {FC} from "react";
+
+type Props = {
+  meetingName: string,
+  onNext: (name: string) => void
+}
 
 const meetingSchema = z.object({
   meetingName: z
@@ -15,17 +20,17 @@ const meetingSchema = z.object({
 
 type MeetingFormValues = z.infer<typeof meetingSchema>
 
-const MeetingNamePage = () => {
-  const navigate = useNavigate()
-
+const NameInputStep: FC<Props> = ({meetingName, onNext}) => {
   const {register, handleSubmit, formState: {errors, isValid}} = useForm<MeetingFormValues>({
     resolver: zodResolver(meetingSchema),
     mode: "onChange",
+    defaultValues: {
+      meetingName: meetingName
+    }
   })
 
   const onSubmit = (data: MeetingFormValues) => {
-    const meetingName = data.meetingName
-    navigate(`/calendar/${meetingName}`)
+    onNext(data.meetingName)
   }
 
   return (
@@ -49,4 +54,4 @@ const MeetingNamePage = () => {
   );
 };
 
-export default MeetingNamePage;
+export default NameInputStep;

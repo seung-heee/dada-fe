@@ -1,10 +1,15 @@
-import Question from "@/components/Question.tsx";
-import {useNavigate, useParams} from "react-router";
-import BottomButton from "@/components/BottomButton.tsx";
+import {type FC} from 'react';
+import type {RoomData} from "@/pages/CreateRoomPage.tsx";
+import {useNavigate} from "react-router";
 import {toast} from "sonner";
+import Question from "@/components/shared/Question.tsx";
+import BottomButton from "@/components/shared/BottomButton.tsx";
 
-const CreateRoomPage = () => {
-  const {meetingName} = useParams()
+type Props = {
+  roomData: RoomData
+}
+
+const CreateSuccessStep: FC<Props> = ({roomData}) => {
   const navigate = useNavigate()
 
   const mockRoomId = "dada-mock-id-123";
@@ -21,11 +26,12 @@ const CreateRoomPage = () => {
     }
   };
 
+
   return (
       <div className="flex flex-col h-full gap-10">
         <div className="flex-grow space-y-8">
           <Question
-              title={`축하해요! ${meetingName} 방이 생겼어요.`}
+              title={`축하해요! ${roomData.name} 방이 생겼어요.`}
           />
 
           <div className="space-y-4 pt-4">
@@ -57,4 +63,4 @@ const CreateRoomPage = () => {
   );
 };
 
-export default CreateRoomPage;
+export default CreateSuccessStep;

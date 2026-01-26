@@ -1,10 +1,16 @@
-import {useNavigate, useParams,} from "react-router";
-import {Calendar} from "@/components/ui/calendar.tsx";
-import Question from "@/components/Question.tsx";
-import BottomButton from "@/components/BottomButton.tsx";
-import {z} from "zod";
+import z from "zod";
 import {Controller, useForm, useWatch} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import Question from "@/components/shared/Question.tsx";
+import {Calendar} from "@/components/ui/calendar.tsx";
+import BottomButton from "@/components/shared/BottomButton.tsx";
+import type {FC} from "react";
+
+type Props = {
+  meetingName: string,
+  onPrev: () => void,
+  onNext: (dates: string[]) => void
+}
 
 const calendarSchema = z.object({
   selectedDates: z
@@ -14,10 +20,7 @@ const calendarSchema = z.object({
 
 type CalendarFormValues = z.infer<typeof calendarSchema>
 
-const CalendarPage = () => {
-  const navigate = useNavigate()
-  const {meetingName} = useParams<{ meetingName: string }>()
-
+const CalendarStep: FC<Props> = ({meetingName, onPrev, onNext}) => {
   const {control, handleSubmit} = useForm<CalendarFormValues>({
     resolver: zodResolver(calendarSchema),
     defaultValues: {
@@ -32,24 +35,14 @@ const CalendarPage = () => {
   const onSubmit = (data: CalendarFormValues) => {
     const formattedDates = data.selectedDates.map((date) => date.toLocaleDateString("en-CA"));
 
-    const payload = {
-      meetingName,
-      dates: formattedDates
-    }
-
-    console.log('BE로 보낼 최종 데이터: ', payload)
-
-    // 성공 후 navigate
-    navigate(`/create-success/${meetingName}`)
+    onNext(formattedDates)
   }
-
 
   return (
       <>
         <Question title={`${meetingName}! 다 같이, 다 되는 날을 찾아볼까요?`}/>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-
           <Controller control={control} name='selectedDates'
                       render={({field}) => (
                           <Calendar
@@ -66,14 +59,17 @@ const CalendarPage = () => {
             현재 <span className="font-bold text-[var(--primary)]">{watchedDates.length}개</span>의 날짜가 선택되었습니다.
           </p>
 
-          <BottomButton
-              type='submit'
-              text="날짜 선택 완료"
-              disabled={watchedDates.length === 0}
-          />
+          <div className='flex'>
+            <BottomButton
+                text="다음 단계로"
+                onPrev={onPrev}
+                onClick={handleSubmit(onSubmit)}
+                disabled={watchedDates.length === 0}
+            />
+          </div>
         </form>
       </>
-  )
+  );
 };
 
-export default CalendarPage;
+export default CalendarStep;
