@@ -3,17 +3,19 @@ import NameInputStep from "@/components/createRoom/NameInputStep.tsx";
 import CalendarStep from "@/components/createRoom/CalendarStep.tsx";
 import CreateSuccessStep from "@/components/createRoom/CreateSuccessStep.tsx";
 import {toast} from "sonner";
+import MemberInputStep from "@/components/createRoom/MemberInputStep.tsx";
 
 export interface RoomData {
   name: string;
+  members: string[];
   dates: string[];
 }
 
-type step = 'NAME' | 'CALENDAR' | 'SUCCESS'
+type step = 'NAME' | 'MEMBER' | 'CALENDAR' | 'SUCCESS'
 
 const CreateRoomPage = () => {
   const [step, setStep] = useState<step>('NAME');
-  const [roomData, setRoomData] = useState<RoomData>({name: '', dates: []});
+  const [roomData, setRoomData] = useState<RoomData>({name: "", members: [], dates: []});
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCreateRoom = async (dates: string[]) => {
@@ -22,13 +24,14 @@ const CreateRoomPage = () => {
 
       const payload = {
         name: roomData.name,
-        dates: dates
+        member: roomData.members || [],
+        dates: dates,
       }
 
       console.log('payload: ', payload)
 
       // BE 통신 로직 & 성공 시 데이터 업데이트 및 다음 스텝 이동
-      setRoomData({...payload});
+      // setRoomData({...payload});
       setStep("SUCCESS");
     } catch (error) {
       toast.error("방 생성에 실패하였습니다.")
@@ -45,7 +48,18 @@ const CreateRoomPage = () => {
                 meetingName={roomData.name}
                 onNext={(name: string) => {
                   setRoomData(prev => ({...prev, name}));
-                  setStep('CALENDAR');
+                  setStep('MEMBER');
+                }}
+            />
+        )}
+
+        {step === "MEMBER" && (
+            <MemberInputStep
+                initialMembers={roomData.members}
+                onPrev={() => setStep("NAME")}
+                onNext={(members) => {
+                  setRoomData(prev => ({...prev, members}));
+                  setStep("CALENDAR");
                 }}
             />
         )}
@@ -53,7 +67,7 @@ const CreateRoomPage = () => {
         {step === "CALENDAR" && (
             <CalendarStep
                 meetingName={roomData.name}
-                onPrev={() => setStep("NAME")}
+                onPrev={() => setStep("MEMBER")}
                 onNext={handleCreateRoom}
                 isLoading={isLoading}
             />

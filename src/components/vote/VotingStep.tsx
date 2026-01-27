@@ -7,6 +7,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import RHFCalendar from "@/components/shared/RHF/RHFCalendar.tsx";
 
 type Props = {
+  memberName: string
   onPrev: () => void
   onNext: () => void
 }
@@ -18,7 +19,7 @@ const calendarSchema = z.object({
 
 type CalendarFormValues = z.infer<typeof calendarSchema>
 
-const VotingStep: FC<Props> = ({onPrev, onNext}) => {
+const VotingStep: FC<Props> = ({memberName, onPrev, onNext}) => {
   const {control, handleSubmit} = useForm<CalendarFormValues>({
     resolver: zodResolver(calendarSchema),
     defaultValues: {
@@ -32,14 +33,16 @@ const VotingStep: FC<Props> = ({onPrev, onNext}) => {
 
   const onSubmit = (data: CalendarFormValues) => {
     console.log(data)
-
     onNext()
   }
 
 
   return (
       <div>
-        <Question title="언제가 좋으세요? 가능한 날짜를 모두 골라주세요!"/>
+        <Question
+            title={`${memberName}님, 언제가 좋으세요?`}
+            subTitle='가능한 날짜를 모두 골라주세요!'
+        />
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <RHFCalendar name='selectedDates' control={control} selectedLength={watchedDates.length}/>
