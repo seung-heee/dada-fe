@@ -1,7 +1,9 @@
+import Question from "@/components/shared/Question.tsx";
+
 const DoneStep = () => {
   return (
       <div>
-        투표 완료! 결과를 확인해보세요
+        <Question title={`투표 완료! 우리의 '다 되는 날'은 언제일까요?`}/>
       </div>
   );
 };

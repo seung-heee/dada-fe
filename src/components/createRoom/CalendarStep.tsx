@@ -1,10 +1,10 @@
 import z from "zod";
-import {Controller, useForm, useWatch} from "react-hook-form";
+import {useForm, useWatch} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import Question from "@/components/shared/Question.tsx";
-import {Calendar} from "@/components/ui/calendar.tsx";
 import BottomButton from "@/components/shared/BottomButton.tsx";
 import type {FC} from "react";
+import RHFCalendar from "@/components/shared/RHF/RHFCalendar.tsx";
 
 type Props = {
   meetingName: string,
@@ -44,21 +44,8 @@ const CalendarStep: FC<Props> = ({meetingName, onPrev, onNext, isLoading}) => {
         <Question title={`${meetingName}! 다 같이, 다 되는 날을 찾아볼까요?`}/>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller control={control} name='selectedDates'
-                      render={({field}) => (
-                          <Calendar
-                              mode="multiple"
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              className="w-full text-lg my-5"
-                              disabled={{before: new Date()}}
-                          />
-                      )}
-          />
-
-          <p className="text-center text-sm text-[var(--text-sub)]">
-            현재 <span className="font-bold text-[var(--primary)]">{watchedDates.length}개</span>의 날짜가 선택되었습니다.
-          </p>
+          {/* 방장이 선택한 날짜만 체크 가능하도록 해야함 */}
+          <RHFCalendar name='selectedDates' control={control} selectedLength={watchedDates.length}/>
 
           <div className='flex'>
             <BottomButton

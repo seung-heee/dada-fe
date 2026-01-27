@@ -4,6 +4,7 @@ import BottomButton from "@/components/shared/BottomButton.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import type {FC} from "react";
+import RHFInput from "@/components/shared/RHF/RHFInput.tsx";
 
 type Props = {
   meetingName: string,
@@ -38,15 +39,11 @@ const NameInputStep: FC<Props> = ({meetingName, onNext}) => {
         <Question title='어떤 모임인가요?'/>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input
+          <RHFInput
               {...register('meetingName')}
               placeholder="예: 다다와 친구들의 신년회"
-              className='customInput'
+              error={errors.meetingName?.message}
           />
-
-          {errors.meetingName && (
-              <p className='text-sm text-red-500 ml-1 mt-[0.5]'>{errors.meetingName.message as string}</p>
-          )}
 
           <BottomButton type='submit' text='다음 단계로' disabled={!isValid}/>
         </form>
