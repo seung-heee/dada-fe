@@ -46,16 +46,13 @@ const CalendarStep: FC<Props> = ({meetingName, onPrev, onNext, isLoading}) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* 방장이 선택한 날짜만 체크 가능하도록 해야함 */}
           <RHFCalendar name='selectedDates' control={control} selectedLength={watchedDates.length}/>
-
-          <div className='flex'>
-            <BottomButton
-                text="다음 단계로"
-                onPrev={onPrev}
-                onClick={handleSubmit(onSubmit)}
-                disabled={watchedDates.length === 0}
-                isLoading={isLoading}
-            />
-          </div>
+          <BottomButton
+              text="다음 단계로"
+              onPrev={onPrev}
+              onClick={handleSubmit(onSubmit)}
+              disabled={watchedDates.length === 0}
+              isLoading={isLoading}
+          />
         </form>
       </>
   );

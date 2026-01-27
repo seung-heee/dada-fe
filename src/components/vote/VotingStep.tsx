@@ -32,7 +32,7 @@ const VotingStep: FC<Props> = ({onPrev, onNext}) => {
 
   const onSubmit = (data: CalendarFormValues) => {
     console.log(data)
-    
+
     onNext()
   }
 
@@ -43,7 +43,6 @@ const VotingStep: FC<Props> = ({onPrev, onNext}) => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <RHFCalendar name='selectedDates' control={control} selectedLength={watchedDates.length}/>
-
           <BottomButton type='submit' text='다음' onPrev={onPrev}/>
         </form>
       </div>

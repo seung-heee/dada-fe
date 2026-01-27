@@ -3,6 +3,7 @@ import OnBoarding from "@/pages/OnBoarding.tsx";
 import {createBrowserRouter} from "react-router";
 import CreateRoomPage from "@/pages/CreateRoomPage.tsx";
 import VotePage from "@/pages/VotePage.tsx";
+import Dashboard from "@/pages/Dashboard.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -11,7 +12,8 @@ export const router = createBrowserRouter([
     children: [
       {index: true, Component: OnBoarding},
       {path: "create-room", Component: CreateRoomPage},
-      {path: "vote/:roomId", Component: VotePage}
+      {path: "vote/:roomId", Component: VotePage},
+      {path: "dashboard/:roomId", Component: Dashboard}
     ]
   },
 ])
