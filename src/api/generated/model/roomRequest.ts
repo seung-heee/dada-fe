@@ -12,5 +12,5 @@ export interface RoomRequest {
   /** 초대할 멤버 이름 리스트 */
   invitedMembers?: string[];
   /** 투표 가능한 후보 날짜 리스트 (ISO-8601 형식) */
-  availableDates: string[];
+  candidateDates: string[];
 }

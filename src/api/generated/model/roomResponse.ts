@@ -10,6 +10,6 @@ export interface RoomResponse {
   roomId?: string;
   name?: string;
   invitedMembers?: string[];
-  availableDates?: string[];
+  candidateDates?: string[];
   createAt?: string;
 }

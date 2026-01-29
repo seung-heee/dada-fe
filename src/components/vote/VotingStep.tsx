@@ -7,10 +7,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import RHFCalendar from '@/components/shared/RHF/RHFCalendar.tsx';
 
 type Props = {
-  availableDates: string[];
+  candidateDates: string[];
   memberName: string;
   onPrev: () => void;
-  onNext: () => void;
+  onNext: (dates: string[]) => void;
 };
 
 const calendarSchema = z.object({
@@ -19,7 +19,7 @@ const calendarSchema = z.object({
 
 type CalendarFormValues = z.infer<typeof calendarSchema>;
 
-const VotingStep: FC<Props> = ({ availableDates, memberName, onPrev, onNext }) => {
+const VotingStep: FC<Props> = ({ candidateDates, memberName, onPrev, onNext }) => {
   const { control, handleSubmit } = useForm<CalendarFormValues>({
     resolver: zodResolver(calendarSchema),
     defaultValues: {
@@ -34,8 +34,8 @@ const VotingStep: FC<Props> = ({ availableDates, memberName, onPrev, onNext }) =
   });
 
   const onSubmit = (data: CalendarFormValues) => {
-    console.log(data);
-    onNext();
+    const formattedDates = data.selectedDates.map((date: Date) => date.toLocaleDateString('en-CA'));
+    onNext(formattedDates);
   };
 
   return (
@@ -47,7 +47,7 @@ const VotingStep: FC<Props> = ({ availableDates, memberName, onPrev, onNext }) =
           name="selectedDates"
           control={control}
           selectedLength={watchedDates.length}
-          availableDates={availableDates}
+          dates={candidateDates}
         />
         <BottomButton type="submit" text="다음" onPrev={onPrev} />
       </form>

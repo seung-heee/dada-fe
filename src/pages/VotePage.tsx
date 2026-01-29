@@ -4,20 +4,21 @@ import IdentityStep from '@/components/vote/IdentityStep.tsx';
 import VotingStep from '@/components/vote/VotingStep.tsx';
 import DoneStep from '@/components/vote/DoneStep.tsx';
 import { useGetRoom } from '@/api/generated/room/room.ts';
-import { Navigate } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 
 type VoteStep = 'INTRO' | 'NAME' | 'VOTING' | 'DONE';
 
 type MemberData = {
   name: string;
-  dates: [];
+  dates: string[];
 };
 
 const VotePage = () => {
   const [step, setStep] = useState<VoteStep>('INTRO');
   const [memberData, setMemberData] = useState<MemberData>({ name: '', dates: [] });
+  const { roomId } = useParams();
 
-  const { data: roomInfo, isLoading, isError } = useGetRoom('m2JvXgtk');
+  const { data: roomInfo, isLoading, isError } = useGetRoom(roomId as string);
 
   if (isLoading) return <>로딩중...</>;
 
@@ -25,7 +26,15 @@ const VotePage = () => {
     return <Navigate to="/404" replace />;
   }
 
-  console.log(roomInfo?.data.availableDates);
+  const handleCompleteVote = (dates: string[]) => {
+    setMemberData((prev) => ({ ...prev, dates }));
+
+    console.log(memberData, dates);
+
+    // mutate
+
+    setStep('DONE');
+  };
 
   return (
     <>
@@ -45,10 +54,10 @@ const VotePage = () => {
 
       {step === 'VOTING' && (
         <VotingStep
-          availableDates={roomInfo?.data.availableDates || []}
+          candidateDates={roomInfo?.data.candidateDates || []}
           memberName={memberData.name}
           onPrev={() => setStep('NAME')}
-          onNext={() => setStep('DONE')}
+          onNext={handleCompleteVote}
         />
       )}
 

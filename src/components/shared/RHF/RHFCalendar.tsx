@@ -1,17 +1,17 @@
 import { useController, type Control } from 'react-hook-form';
 import { Calendar } from '@/components/ui/calendar.tsx';
 import type { FC } from 'react';
-import { format } from 'date-fns';
+import { format, startOfToday } from 'date-fns';
 
 interface Props {
   name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any>;
-  availableDates?: string[];
+  dates?: string[];
   selectedLength: number;
 }
 
-const RHFCalendar: FC<Props> = ({ name, control, availableDates, selectedLength }) => {
+const RHFCalendar: FC<Props> = ({ name, control, dates, selectedLength }) => {
   const {
     field: { value, onChange },
   } = useController({
@@ -19,7 +19,9 @@ const RHFCalendar: FC<Props> = ({ name, control, availableDates, selectedLength 
     control,
   });
 
-  const availableSet = new Set(availableDates || []);
+  const availableSet = new Set(dates);
+  const defaultDisabled = { before: startOfToday() };
+
   const isDateDisabled = (date: Date) => {
     return !availableSet.has(format(date, 'yyyy-MM-dd'));
   };
@@ -31,7 +33,7 @@ const RHFCalendar: FC<Props> = ({ name, control, availableDates, selectedLength 
         selected={value}
         onSelect={onChange}
         className="w-full text-lg my-5 rounded-md"
-        disabled={isDateDisabled}
+        disabled={dates?.length ? isDateDisabled : defaultDisabled}
       />
 
       <p className="text-center text-sm text-(--text-sub)">
