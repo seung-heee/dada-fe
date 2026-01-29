@@ -32,7 +32,6 @@ const VotePage = () => {
     console.log(memberData, dates);
 
     // mutate
-
     setStep('DONE');
   };
 

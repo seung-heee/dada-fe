@@ -2,10 +2,11 @@ import { useState } from 'react';
 import NameInputStep from '@/components/createRoom/NameInputStep.tsx';
 import CalendarStep from '@/components/createRoom/CalendarStep.tsx';
 import CreateSuccessStep from '@/components/createRoom/CreateSuccessStep.tsx';
-import { toast } from 'sonner';
 import MemberInputStep from '@/components/createRoom/MemberInputStep.tsx';
+import { useCreateRoom } from '@/api/generated/room/room.ts';
 
 export interface RoomData {
+  roomId?: string;
   name: string;
   invitedMembers: string[];
   candidateDates: string[];
@@ -15,30 +16,28 @@ type step = 'NAME' | 'MEMBER' | 'CALENDAR' | 'SUCCESS';
 
 const CreateRoomPage = () => {
   const [step, setStep] = useState<step>('NAME');
-  const [roomData, setRoomData] = useState<RoomData>({ name: '', invitedMembers: [], candidateDates: [] });
-  const [isLoading, setIsLoading] = useState(false);
+  const [roomData, setRoomData] = useState<RoomData>({ roomId: '', name: '', invitedMembers: [], candidateDates: [] });
+
+  const { mutate, isPending } = useCreateRoom({
+    mutation: {
+      onSuccess: (response) => {
+        setRoomData((prev) => ({ ...prev, roomId: response.data?.roomId }));
+        setStep('SUCCESS');
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    },
+  });
 
   const handleCreateRoom = async (dates: string[]) => {
-    try {
-      setIsLoading(true);
+    const payload = {
+      name: roomData.name,
+      invitedMembers: roomData.invitedMembers || [],
+      candidateDates: dates,
+    };
 
-      const payload = {
-        name: roomData.name,
-        invitedMembers: roomData.invitedMembers || [],
-        candidateDates: dates,
-      };
-
-      console.log('payload: ', payload);
-
-      // BE 통신 로직 & 성공 시 데이터 업데이트 및 다음 스텝 이동
-      // setRoomData({...payload});
-      setStep('SUCCESS');
-    } catch (error) {
-      toast.error('방 생성에 실패하였습니다.');
-      console.error('방 생성 실패:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    mutate({ data: payload });
   };
 
   return (
@@ -58,7 +57,7 @@ const CreateRoomPage = () => {
           invitedMembers={roomData.invitedMembers}
           onPrev={() => setStep('NAME')}
           onNext={(members) => {
-            setRoomData((prev) => ({ ...prev, members }));
+            setRoomData((prev) => ({ ...prev, invitedMembers: members }));
             setStep('CALENDAR');
           }}
         />
@@ -69,7 +68,7 @@ const CreateRoomPage = () => {
           meetingName={roomData.name}
           onPrev={() => setStep('MEMBER')}
           onNext={handleCreateRoom}
-          isLoading={isLoading}
+          isLoading={isPending}
         />
       )}
 

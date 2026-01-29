@@ -12,8 +12,7 @@ type Props = {
 const CreateSuccessStep: FC<Props> = ({ roomData }) => {
   const navigate = useNavigate();
 
-  const mockRoomId = 'dada-mock-id-123';
-  const shareUrl = `${window.location.origin}/vote/${mockRoomId}`;
+  const shareUrl = `${window.location.origin}/vote/${roomData.roomId}`;
 
   const handleCopyLink = async () => {
     try {
