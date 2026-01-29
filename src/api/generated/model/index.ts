@@ -6,8 +6,14 @@
  * OpenAPI spec version: v1.0.0
  */
 
+export * from './baseResponseDashboardResponse';
 export * from './baseResponseMapStringString';
 export * from './baseResponseMapStringStringData';
 export * from './baseResponseRoomResponse';
+export * from './baseResponseUnit';
+export * from './dashboardResponse';
 export * from './roomRequest';
 export * from './roomResponse';
+export * from './topScheduleDto';
+export * from './unit';
+export * from './voteRequest';

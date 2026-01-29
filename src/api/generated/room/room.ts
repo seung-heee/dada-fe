@@ -21,7 +21,14 @@ import type {
   UseQueryResult,
 } from '@tanstack/react-query';
 
-import type { BaseResponseMapStringString, BaseResponseRoomResponse, RoomRequest } from '.././model';
+import type {
+  BaseResponseDashboardResponse,
+  BaseResponseMapStringString,
+  BaseResponseRoomResponse,
+  BaseResponseUnit,
+  RoomRequest,
+  VoteRequest,
+} from '.././model';
 
 import { customInstance } from '../../axios-instance';
 
@@ -72,6 +79,76 @@ export const useCreateRoom = <TError = unknown, TContext = unknown>(
   queryClient?: QueryClient,
 ): UseMutationResult<Awaited<ReturnType<typeof createRoom>>, TError, { data: RoomRequest }, TContext> => {
   return useMutation(getCreateRoomMutationOptions(options), queryClient);
+};
+/**
+ * 참여자가 참여 가능한 날짜에 투표합니다.
+ * @summary 참여자 투표
+ */
+export const voteForRoom = (roomId: string, voteRequest: VoteRequest, signal?: AbortSignal) => {
+  return customInstance<BaseResponseUnit>({
+    url: `/api/rooms/${roomId}/votes`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: voteRequest,
+    signal,
+  });
+};
+
+export const getVoteForRoomMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof voteForRoom>>,
+    TError,
+    { roomId: string; data: VoteRequest },
+    TContext
+  >;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof voteForRoom>>,
+  TError,
+  { roomId: string; data: VoteRequest },
+  TContext
+> => {
+  const mutationKey = ['voteForRoom'];
+  const { mutation: mutationOptions } = options
+    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } };
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof voteForRoom>>, { roomId: string; data: VoteRequest }> = (
+    props,
+  ) => {
+    const { roomId, data } = props ?? {};
+
+    return voteForRoom(roomId, data);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type VoteForRoomMutationResult = NonNullable<Awaited<ReturnType<typeof voteForRoom>>>;
+export type VoteForRoomMutationBody = VoteRequest;
+export type VoteForRoomMutationError = unknown;
+
+/**
+ * @summary 참여자 투표
+ */
+export const useVoteForRoom = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof voteForRoom>>,
+      TError,
+      { roomId: string; data: VoteRequest },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof voteForRoom>>,
+  TError,
+  { roomId: string; data: VoteRequest },
+  TContext
+> => {
+  return useMutation(getVoteForRoomMutationOptions(options), queryClient);
 };
 /**
  * roomId를 통해 특정 방의 상세 정보를 조회합니다.
@@ -142,6 +219,95 @@ export function useGetRoom<TData = Awaited<ReturnType<typeof getRoom>>, TError =
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
   const queryOptions = getGetRoomQueryOptions(roomId, options);
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * 특정 방의 투표 현황, TOP 3 날짜, 참여자 및 미참여자 정보를 조회합니다.
+ * @summary 대시보드 데이터 조회
+ */
+export const getDashboard = (roomId: string, signal?: AbortSignal) => {
+  return customInstance<BaseResponseDashboardResponse>({
+    url: `/api/rooms/${roomId}/dashboard`,
+    method: 'GET',
+    signal,
+  });
+};
+
+export const getGetDashboardQueryKey = (roomId: string) => {
+  return [`/api/rooms/${roomId}/dashboard`] as const;
+};
+
+export const getGetDashboardQueryOptions = <TData = Awaited<ReturnType<typeof getDashboard>>, TError = unknown>(
+  roomId: string,
+  options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getDashboard>>, TError, TData>> },
+) => {
+  const { query: queryOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetDashboardQueryKey(roomId);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getDashboard>>> = ({ signal }) => getDashboard(roomId, signal);
+
+  return { queryKey, queryFn, enabled: !!roomId, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getDashboard>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type GetDashboardQueryResult = NonNullable<Awaited<ReturnType<typeof getDashboard>>>;
+export type GetDashboardQueryError = unknown;
+
+export function useGetDashboard<TData = Awaited<ReturnType<typeof getDashboard>>, TError = unknown>(
+  roomId: string,
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getDashboard>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDashboard>>,
+          TError,
+          Awaited<ReturnType<typeof getDashboard>>
+        >,
+        'initialData'
+      >;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetDashboard<TData = Awaited<ReturnType<typeof getDashboard>>, TError = unknown>(
+  roomId: string,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getDashboard>>, TError, TData>> &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDashboard>>,
+          TError,
+          Awaited<ReturnType<typeof getDashboard>>
+        >,
+        'initialData'
+      >;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetDashboard<TData = Awaited<ReturnType<typeof getDashboard>>, TError = unknown>(
+  roomId: string,
+  options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getDashboard>>, TError, TData>> },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+/**
+ * @summary 대시보드 데이터 조회
+ */
+
+export function useGetDashboard<TData = Awaited<ReturnType<typeof getDashboard>>, TError = unknown>(
+  roomId: string,
+  options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getDashboard>>, TError, TData>> },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getGetDashboardQueryOptions(roomId, options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;

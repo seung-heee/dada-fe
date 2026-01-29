@@ -3,7 +3,7 @@ import IntroStep from '@/components/vote/IntroStep.tsx';
 import IdentityStep from '@/components/vote/IdentityStep.tsx';
 import VotingStep from '@/components/vote/VotingStep.tsx';
 import DoneStep from '@/components/vote/DoneStep.tsx';
-import { useGetRoom } from '@/api/generated/room/room.ts';
+import { useGetRoom, useVoteForRoom } from '@/api/generated/room/room.ts';
 import { Navigate, useParams } from 'react-router';
 
 type VoteStep = 'INTRO' | 'NAME' | 'VOTING' | 'DONE';
@@ -17,8 +17,17 @@ const VotePage = () => {
   const [step, setStep] = useState<VoteStep>('INTRO');
   const [memberData, setMemberData] = useState<MemberData>({ name: '', dates: [] });
   const { roomId } = useParams();
-
   const { data: roomInfo, isLoading, isError } = useGetRoom(roomId as string);
+  const { mutate } = useVoteForRoom({
+    mutation: {
+      onSuccess: (response) => {
+        console.log(response);
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    },
+  });
 
   if (isLoading) return <>로딩중...</>;
 
@@ -27,11 +36,15 @@ const VotePage = () => {
   }
 
   const handleCompleteVote = (dates: string[]) => {
+    if (!roomId) return;
     setMemberData((prev) => ({ ...prev, dates }));
 
-    console.log(memberData, dates);
+    const data = {
+      memberName: memberData.name,
+      selectedDates: dates,
+    };
 
-    // mutate
+    mutate({ roomId, data });
     setStep('DONE');
   };
 

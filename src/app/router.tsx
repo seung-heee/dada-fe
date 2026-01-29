@@ -1,21 +1,23 @@
 import RootLayout from '@/layout/RootLayout.tsx';
-import OnBoarding from '@/pages/OnBoarding.tsx';
 import { createBrowserRouter } from 'react-router';
 import CreateRoomPage from '@/pages/CreateRoomPage.tsx';
 import VotePage from '@/pages/VotePage.tsx';
-import Dashboard from '@/pages/Dashboard.tsx';
-import NotFound from '@/pages/NotFound.tsx';
+import DashboardPage from '@/pages/DashboardPage.tsx';
+import OnBoardingPage from '@/pages/OnBoardingPage.tsx';
+import NotFoundPage from '@/pages/NotFoundPage.tsx';
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: '/',
     Component: RootLayout,
     children: [
-      { index: true, Component: OnBoarding },
+      { index: true, Component: OnBoardingPage },
       { path: 'create-room', Component: CreateRoomPage },
       { path: 'vote/:roomId', Component: VotePage },
-      { path: 'dashboard/:roomId', Component: Dashboard },
-      { path: '404', Component: NotFound },
+      { path: 'dashboard/:roomId', Component: DashboardPage },
+      { path: '404', Component: NotFoundPage },
     ],
   },
 ]);
+
+export default router;

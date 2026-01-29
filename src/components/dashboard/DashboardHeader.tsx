@@ -1,45 +1,66 @@
-import {cn} from "@/lib/utils.ts";
-import {Users} from "lucide-react";
+import type { FC } from 'react';
+import type { DashboardResponse } from '@/api/generated/model';
 
-interface DashboardHeaderProps {
-  meetingName: string;
-  participants: string[];
-}
+type Props = {
+  dashboardData: DashboardResponse;
+};
 
-const DashboardHeader = ({meetingName, participants}: DashboardHeaderProps) => {
+const DashboardHeader: FC<Props> = ({ dashboardData }) => {
+  const { meetingName, totalMembers, votedMembers } = dashboardData;
+
+  const votedSet = new Set(votedMembers);
+  const nonParticipants = totalMembers?.filter((name) => !votedSet.has(name)) || [];
+
   return (
-      <header className="w-full pb-6 px-1">
-        <h1 className="text-3xl font-black text-zinc-900 tracking-tight leading-tight mb-5">
-          {meetingName}
-        </h1>
+    <header className="w-full pb-6 px-1">
+      <h1 className="text-2xl font-black text-zinc-900 tracking-tight leading-tight mb-4 italic">{meetingName}</h1>
 
-        <div className="bg-white/40 backdrop-blur-sm border border-zinc-100/50 rounded-2xl p-3 shadow-sm">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <div className="flex items-center gap-1 px-2 py-1 mr-1">
-              <Users size={12} className="text-zinc-400"/>
-              <span className="text-[10px] font-black text-zinc-400 uppercase tracking-tighter">With</span>
-            </div>
-
-            {participants.map((name, index) => (
+      <div className="bg-white/30 backdrop-blur-md border border-zinc-100/50 rounded-xl p-3 shadow-sm space-y-4">
+        {/* 참여 완료 (Done) */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest mr-2 px-1 w-8">Done</span>
+          {votedMembers!.length > 0 ? (
+            <>
+              {votedMembers!.map((name) => (
                 <div
-                    key={name}
-                    className={cn(
-                        "flex items-center gap-1 px-2.5 py-1 rounded-full border text-[12px] font-bold transition-all",
-                        index === 0
-                            ? "bg-emerald-50 border-emerald-100 text-emerald-700 shadow-sm"
-                            : "bg-white/80 border-zinc-100 text-zinc-500"
-                    )}
+                  key={name}
+                  className="flex items-center gap-1.5 px-2 py-0.5 rounded-md border border-emerald-100/50 bg-emerald-50/40 text-emerald-700 text-[11px] font-bold"
                 >
-                  <div className={cn(
-                      "w-1 h-1 rounded-full",
-                      index === 0 ? "bg-emerald-500 animate-pulse" : "bg-zinc-300"
-                  )}/>
+                  <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
                   {name}
                 </div>
-            ))}
-          </div>
+              ))}
+            </>
+          ) : (
+            <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mr-2 px-1">
+              텅 빈 투표함을 보니 제 마음도 텅... 🥺 얼른 채워주세요!
+            </span>
+          )}
         </div>
-      </header>
+
+        {/* 미참여 (Wait) - 크기/구조 동일, 색상만 변경 */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mr-2 px-1 w-8">Wait</span>
+          {nonParticipants.length > 0 ? (
+            <>
+              {nonParticipants.map((name) => (
+                <div
+                  key={name}
+                  className="flex items-center gap-1.5 px-2 py-0.5 rounded-md border border-zinc-100 bg-zinc-50/50 text-zinc-400 text-[11px] font-bold"
+                >
+                  <div className="w-1 h-1 rounded-full bg-zinc-300" />
+                  {name}
+                </div>
+              ))}
+            </>
+          ) : (
+            <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mr-2 px-1">
+              준비 완료! 🚀 이제 즐거운 모임만 남았네요.
+            </span>
+          )}
+        </div>
+      </div>
+    </header>
   );
 };
 

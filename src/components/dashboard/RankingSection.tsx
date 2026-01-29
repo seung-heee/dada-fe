@@ -1,31 +1,27 @@
-import RankCard from "@/components/dashboard/RankCard.tsx";
+import RankCard from '@/components/dashboard/RankCard.tsx';
+import type { FC } from 'react';
+import type { DashboardResponse, TopScheduleDto } from '@/api/generated/model';
 
-const TOTAL_MEMBERS = ['승희', '민수', '영희', '지민', '도현', '지혜'];
+type Props = {
+  dashboardData: DashboardResponse;
+};
 
-const RankingSection = () => {
+const RankingSection: FC<Props> = ({ dashboardData }) => {
+  const topSchedules = dashboardData.topSchedules || [];
+  const totalMembers = dashboardData.totalMembers;
+
   return (
-      <div className="flex flex-col gap-4 rounded-xl">
+    <div className="flex flex-col gap-4 rounded-xl">
+      {topSchedules.map((schedule: TopScheduleDto, index: number) => (
         <RankCard
-            rank={1}
-            date="2026-02-06"
-            availableMembers={['승희', '민수', '영희', '지민', '도현', '지혜']}
-            totalMembers={TOTAL_MEMBERS}
+          key={schedule.date}
+          rank={index + 1}
+          date={schedule.date || ''}
+          availableMembers={schedule.availableMembers || []}
+          totalMembers={totalMembers || []}
         />
-
-        <RankCard
-            rank={2}
-            date="2026-02-07"
-            availableMembers={['승희', '민수', '영희', '지민', '도현']}
-            totalMembers={TOTAL_MEMBERS}
-        />
-
-        <RankCard
-            rank={3}
-            date="2026-02-08"
-            availableMembers={['승희', '영희', '지민', '도현']}
-            totalMembers={TOTAL_MEMBERS}
-        />
-      </div>
+      ))}
+    </div>
   );
 };
 
