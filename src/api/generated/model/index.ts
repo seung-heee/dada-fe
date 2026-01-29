@@ -6,6 +6,8 @@
  * OpenAPI spec version: v1.0.0
  */
 
-export * from './createRoom200';
+export * from './baseResponseMapStringString';
+export * from './baseResponseMapStringStringData';
+export * from './baseResponseRoomResponse';
 export * from './roomRequest';
 export * from './roomResponse';

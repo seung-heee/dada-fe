@@ -21,7 +21,7 @@ import type {
   UseQueryResult,
 } from '@tanstack/react-query';
 
-import type { RoomRequest } from '.././model';
+import type { BaseResponseMapStringString, BaseResponseRoomResponse, RoomRequest } from '.././model';
 
 import { customInstance } from '../../axios-instance';
 
@@ -30,12 +30,11 @@ import { customInstance } from '../../axios-instance';
  * @summary 새로운 방 생성
  */
 export const createRoom = (roomRequest: RoomRequest, signal?: AbortSignal) => {
-  return customInstance<Blob>({
+  return customInstance<BaseResponseMapStringString>({
     url: `/api/rooms`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     data: roomRequest,
-    responseType: 'blob',
     signal,
   });
 };
@@ -79,7 +78,7 @@ export const useCreateRoom = <TError = unknown, TContext = unknown>(
  * @summary 방 상세 정보 조회
  */
 export const getRoom = (roomId: string, signal?: AbortSignal) => {
-  return customInstance<Blob>({ url: `/api/rooms/${roomId}`, method: 'GET', responseType: 'blob', signal });
+  return customInstance<BaseResponseRoomResponse>({ url: `/api/rooms/${roomId}`, method: 'GET', signal });
 };
 
 export const getGetRoomQueryKey = (roomId: string) => {

@@ -6,4 +6,4 @@
  * OpenAPI spec version: v1.0.0
  */
 
-export type CreateRoom200 = { [key: string]: string };
+export type BaseResponseMapStringStringData = { [key: string]: string };
