@@ -1,10 +1,10 @@
 import { type FC } from 'react';
 import type { RoomData } from '@/pages/CreateRoomPage.tsx';
 import { useNavigate } from 'react-router';
-import { toast } from 'sonner';
 import Question from '@/components/shared/Question.tsx';
 import BottomButton from '@/components/shared/BottomButton.tsx';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import CopyLink from '@/components/shared/CopyLink.tsx';
 
 type Props = {
   roomData: RoomData;
@@ -12,19 +12,6 @@ type Props = {
 
 const CreateSuccessStep: FC<Props> = ({ roomData }) => {
   const navigate = useNavigate();
-
-  const shareUrl = `${window.location.origin}/vote/${roomData.roomId}`;
-
-  const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      toast('링크가 복사되었습니다!', {
-        description: '친구들에게 링크를 공유해보세요. 🔗',
-      });
-    } catch (err) {
-      console.error('복사 실패:', err);
-    }
-  };
 
   return (
     <div className="flex flex-col h-full gap-10 grow">
@@ -42,16 +29,7 @@ const CreateSuccessStep: FC<Props> = ({ roomData }) => {
             className="w-50 h-50 mx-auto my-20 grow"
           />
 
-          <div className="space-y-2 pt-4 px-5">
-            <p className="text-center text-xs text-(--text-sub)">아래 박스를 누르면 링크가 바로 복사됩니다.</p>
-            <div
-              className="flex items-center justify-between p-4 bg-white border border-(--border-color) rounded-md shadow-sm active:scale-95 transition-transform cursor-pointer"
-              onClick={handleCopyLink}
-            >
-              <span className="text-(--text-main) font-medium truncate mr-4">{shareUrl}</span>
-              <button className="text-emerald-400 font-bold shrink-0">COPY</button>
-            </div>
-          </div>
+          <CopyLink roomId={roomData.roomId || ''} />
         </div>
 
         <BottomButton
