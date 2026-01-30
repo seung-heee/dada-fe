@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import NameInputStep from '@/components/createRoom/NameInputStep.tsx';
-import CalendarStep from '@/components/createRoom/CalendarStep.tsx';
-import CreateSuccessStep from '@/components/createRoom/CreateSuccessStep.tsx';
-import MemberInputStep from '@/components/createRoom/MemberInputStep.tsx';
+import NameInputStep from '@/components/createRoom/widgets/NameInputStep.tsx';
+import CalendarStep from '@/components/createRoom/widgets/CalendarStep.tsx';
+import CreateSuccessStep from '@/components/createRoom/widgets/CreateSuccessStep.tsx';
+import MemberInputStep from '@/components/createRoom/widgets/MemberInputStep.tsx';
 import { useCreateRoom } from '@/api/generated/room/room.ts';
 
 export interface RoomData {

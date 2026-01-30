@@ -73,7 +73,7 @@ const VotePage = () => {
         />
       )}
 
-      {step === 'DONE' && <DoneStep />}
+      {step === 'DONE' && <DoneStep roomId={roomId || ''} />}
     </>
   );
 };
