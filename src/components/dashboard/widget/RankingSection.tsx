@@ -1,4 +1,4 @@
-import RankCard from '@/components/dashboard/RankCard.tsx';
+import RankCard from '@/components/dashboard/widget/RankCard.tsx';
 import type { FC } from 'react';
 import type { DashboardResponse, TopScheduleDto } from '@/api/generated/model';
 

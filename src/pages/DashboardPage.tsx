@@ -1,5 +1,5 @@
-import DashboardHeader from '@/components/dashboard/DashboardHeader.tsx';
-import RankingSection from '@/components/dashboard/RankingSection.tsx';
+import DashboardHeader from '@/components/dashboard/widget/DashboardHeader.tsx';
+import RankingSection from '@/components/dashboard/widget/RankingSection.tsx';
 import { useGetDashboard } from '@/api/generated/room/room.ts';
 import { useParams } from 'react-router';
 import type { DashboardResponse } from '@/api/generated/model';

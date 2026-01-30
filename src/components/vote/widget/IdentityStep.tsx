@@ -6,7 +6,7 @@ import z from 'zod';
 import Question from '@/components/shared/Question.tsx';
 import RHFInput from '@/components/shared/RHF/RHFInput.tsx';
 import BottomButton from '@/components/shared/BottomButton.tsx';
-import MemberBadge from '@/components/createRoom/ui/MemberBadge.tsx';
+import MemberBadge from '@/components/vote/ui/MemberBadge.tsx';
 
 type Props = {
   onPrev: () => void;

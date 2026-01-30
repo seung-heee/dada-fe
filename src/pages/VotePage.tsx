@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import IntroStep from '@/components/vote/IntroStep.tsx';
-import IdentityStep from '@/components/vote/IdentityStep.tsx';
-import VotingStep from '@/components/vote/VotingStep.tsx';
-import DoneStep from '@/components/vote/DoneStep.tsx';
+import IntroStep from '@/components/vote/widget/IntroStep.tsx';
+import IdentityStep from '@/components/vote/widget/IdentityStep.tsx';
+import VotingStep from '@/components/vote/widget/VotingStep.tsx';
+import DoneStep from '@/components/vote/widget/DoneStep.tsx';
 import { useGetRoom, useVoteForRoom } from '@/api/generated/room/room.ts';
 import { Navigate, useParams } from 'react-router';
 
