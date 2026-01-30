@@ -1,5 +1,7 @@
 import RHFInput from '@/components/shared/RHF/RHFInput.tsx';
 import type { FC } from 'react';
+import { Plus } from 'lucide-react';
+import { cn } from '@/lib/utils.ts';
 
 type Props = {
   member: string;
@@ -30,11 +32,20 @@ const MemberInput: FC<Props> = ({ member, members, setMember, setMembers }) => {
       <RHFInput
         value={member}
         onChange={(e) => setMember(e.target.value)}
-        placeholder="예: 홍길동, 김철수"
+        placeholder="ex) 짱구, 철수, 유리, 훈이, 맹구"
         onKeyDown={onKeyDown}
       />
-      <button onClick={addMember} className="bg-emerald-400 text-white rounded-full font-bold text-sm px-5 h-9 w-20">
-        추가
+      <button
+        onClick={addMember}
+        disabled={!member.trim()} // 값이 비어있으면 버튼 비활성화
+        className={cn(
+          'mt-5 py-4 px-4 flex items-center justify-center rounded-2xl transition-all duration-200 shadow-md',
+          'bg-emerald-400 text-white hover:bg-emerald-500 active:scale-95',
+          'disabled:bg-zinc-200 disabled:text-zinc-400 disabled:cursor-not-allowed disabled:shadow-none disabled:active:scale-100',
+        )}
+        aria-label="멤버 추가"
+      >
+        <Plus className="w-5 h-5 stroke-3" />
       </button>
     </div>
   );

@@ -16,11 +16,12 @@ const MemberInputStep: FC<Props> = ({ onNext, onPrev, invitedMembers }) => {
 
   return (
     <>
-      <Question title="함께하는 멤버가 있나요?" subTitle="미리 적어두면 친구들이 투표할 때 편해해요! (건너뛰기 가능)" />
+      <Question
+        title="함께할 크루를 알려주세요! 🤟"
+        subTitle="참여자를 미리 등록하면 투표 참여율이 더 높아집니다. (건너뛰기 가능)"
+      />
 
-      <div className="mt-6">
-        <MemberInput member={member} members={members} setMember={setMember} setMembers={setMembers} />
-      </div>
+      <MemberInput member={member} members={members} setMember={setMember} setMembers={setMembers} />
 
       <BadgeMemberList members={members} setMembers={setMembers} />
 

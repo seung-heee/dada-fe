@@ -49,8 +49,8 @@ const IdentityStep: FC<Props> = ({ onPrev, onNext, memberName, invitedMembers = 
   return (
     <>
       <Question
-        title="누가 오셨나요?"
-        subTitle={hasInvitedList ? '본인의 이름을 명단에서 선택해주세요.' : '본인의 이름을 알려주세요.'}
+        title="누구신지 '정체'를 밝혀주세요! 🕵️‍♂️"
+        subTitle={hasInvitedList ? '명단에서 본인 이름을 콕 찍어주세요.' : '본인의 이름을 알려주세요.'}
       />
 
       <div className="mt-8">

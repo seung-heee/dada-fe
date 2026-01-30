@@ -22,7 +22,7 @@ const Done: FC<Props> = ({ votedMembers }) => {
         </>
       ) : (
         <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mr-2 px-1">
-          텅 빈 투표함을 보니 제 마음도 텅... 🥺 얼른 채워주세요!
+          아직 투표를 완료한 사람이 없습니다.
         </span>
       )}
     </div>

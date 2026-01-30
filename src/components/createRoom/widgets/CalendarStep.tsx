@@ -40,12 +40,15 @@ const CalendarStep: FC<Props> = ({ meetingName, onPrev, onNext, isLoading }) => 
 
   return (
     <>
-      <Question title={`${meetingName}! 다 같이, 다 되는 날을 찾아볼까요?`} />
+      <Question
+        title={`${meetingName}! 우리 언제 모일까요?`}
+        subTitle="후보가 많을수록 모임 성사 확률도 상한가! 다다익선 아시죠?"
+      />
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <RHFCalendar name="selectedDates" control={control} selectedLength={watchedDates.length} />
         <BottomButton
-          text="다음 단계로"
+          text="완료"
           onPrev={onPrev}
           onClick={handleSubmit(onSubmit)}
           disabled={watchedDates.length === 0}

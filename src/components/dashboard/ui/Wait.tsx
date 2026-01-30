@@ -22,7 +22,7 @@ const Wait: FC<Props> = ({ nonParticipants }) => {
         </>
       ) : (
         <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mr-2 px-1">
-          준비 완료! 🚀 이제 즐거운 모임만 남았네요.
+          전원 투표 완료! 이제 즐거운 모임만 남았네요.
         </span>
       )}
     </div>

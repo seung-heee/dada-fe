@@ -40,7 +40,10 @@ const VotingStep: FC<Props> = ({ candidateDates, memberName, onPrev, onNext }) =
 
   return (
     <div>
-      <Question title={`${memberName}님, 언제가 좋으세요?`} subTitle="가능한 날짜를 모두 골라주세요!" />
+      <Question
+        title={`${memberName}님, 언제가 좋으세요?`}
+        subTitle="가능한 날짜를 모두 찍어야 모임 성사 확률이 올라가는 거 아시죠? 😉"
+      />
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <RHFCalendar
