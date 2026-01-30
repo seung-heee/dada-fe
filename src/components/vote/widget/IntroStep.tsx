@@ -1,6 +1,7 @@
 import BottomButton from '@/components/shared/BottomButton.tsx';
 import type { FC } from 'react';
 import Question from '@/components/shared/Question.tsx';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 type Props = {
   name?: string;
@@ -16,6 +17,15 @@ const IntroStep: FC<Props> = ({ name, onNext }) => {
       />
 
       <BottomButton text="시작하기" onClick={onNext} />
+
+      <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden">
+        <DotLottieReact
+          src="https://lottie.host/7030b97b-fff4-4318-a1d3-15c47b78b218/2ujQqN8KvP.lottie"
+          loop
+          autoplay
+          className="w-1/2"
+        />
+      </div>
     </div>
   );
 };

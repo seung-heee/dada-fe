@@ -9,7 +9,7 @@ type Props = {
 
 const EmptyDashboard: FC<Props> = ({ roomId, meetingName }) => {
   return (
-    <div className="flex flex-col  h-[calc(100dvh-96px)]">
+    <div className="flex flex-col h-[calc(100dvh-96px)]">
       <header className="w-full pb-6 px-1">
         <h1 className="text-2xl font-black text-zinc-900 tracking-tight leading-tight mb-4 italic">{meetingName}</h1>
       </header>
