@@ -8,6 +8,7 @@ export const AXIOS_INSTANCE = axios.create({
   withCredentials: true,
 });
 
+
 export const customInstance = <T>(config: AxiosRequestConfig): Promise<T> => {
   return AXIOS_INSTANCE(config).then((response) => response.data);
 };
