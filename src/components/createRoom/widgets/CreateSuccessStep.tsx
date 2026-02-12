@@ -15,18 +15,18 @@ const CreateSuccessStep: FC<Props> = ({ roomData }) => {
 
   return (
     <div className="flex flex-col h-full gap-10 grow">
-      <div className="grow">
+      <div className="grow space-y-3">
         <Question
           title={`축하해요! ${roomData.name} 오픈 완료 🎉`}
           subTitle="참여율 100% 달성하러 갑시다. 지금 링크로 소환하세요! 🔗"
         />
 
-        <div className="flex flex-col">
+        <div className="flex flex-col my-2">
           <DotLottieReact
             src="https://lottie.host/04ce0b10-4d80-4511-b074-6b71a112f1f0/nyRRGortgZ.json"
             loop
             autoplay
-            className="mx-auto grow aspect-square h-30"
+            className="mx-auto grow aspect-square h-40"
           />
 
           <CopyLink roomId={roomData.roomId || ''} />
