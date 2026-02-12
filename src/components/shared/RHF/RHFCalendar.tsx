@@ -27,7 +27,7 @@ const RHFCalendar: FC<Props> = ({ name, control, dates, selectedLength }) => {
   };
 
   return (
-    <div className="my-8 flex flex-col">
+    <div className="my-8 flex flex-col gap-2">
       <Calendar
         mode="multiple"
         selected={value}
