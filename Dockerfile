@@ -7,7 +7,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # 의존성 설치를 위해 package.json과 lock 파일을 복사
-COPY package.json package-lock.json ./
+COPY package.json package-ylock.json ./
 
 # 패키지 설치
 RUN npm install
