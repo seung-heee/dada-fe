@@ -27,16 +27,18 @@ const RHFCalendar: FC<Props> = ({ name, control, dates, selectedLength }) => {
   };
 
   return (
-    <div className="my-8 flex flex-col gap-2">
-      <Calendar
-        mode="multiple"
-        selected={value}
-        onSelect={onChange}
-        className="w-full text-lg my-5 rounded-md"
-        disabled={dates?.length ? isDateDisabled : defaultDisabled}
-      />
+    <div className="flex flex-col gap-2">
+      <div className="my-2">
+        <Calendar
+          mode="multiple"
+          selected={value}
+          onSelect={onChange}
+          className="w-full text-lg my-5 rounded-md"
+          disabled={dates?.length ? isDateDisabled : defaultDisabled}
+        />
+      </div>
 
-      <p className="text-center text-sm text-(--text-sub)">
+      <p className="text-center text-sm text-(--text-sub) my-4">
         현재 <span className="font-bold text-(--primary)">{selectedLength}개</span>의 날짜가 선택되었습니다.
       </p>
     </div>

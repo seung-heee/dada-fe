@@ -20,7 +20,7 @@ const DoneStep: FC<Props> = ({ roomId }) => {
           src="https://lottie.host/04ce0b10-4d80-4511-b074-6b71a112f1f0/nyRRGortgZ.json"
           loop
           autoplay
-          className="w-50 h-50 mx-auto my-20 grow"
+          className="w-30 h-30 mx-auto my-20 grow"
         />
       </div>
 
