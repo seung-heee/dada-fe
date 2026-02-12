@@ -20,16 +20,15 @@ const CreateSuccessStep: FC<Props> = ({ roomData }) => {
           title={`축하해요! ${roomData.name} 오픈 완료 🎉`}
           subTitle="참여율 100% 달성하러 갑시다. 지금 링크로 소환하세요! 🔗"
         />
+        <CopyLink roomId={roomData.roomId || ''} desc={false} />
 
-        <div className="flex flex-col my-2">
+        <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden">
           <DotLottieReact
             src="https://lottie.host/04ce0b10-4d80-4511-b074-6b71a112f1f0/nyRRGortgZ.json"
             loop
             autoplay
-            className="mx-auto grow aspect-square h-40"
+            className="w-30 h-30 mx-auto my-20 grow"
           />
-
-          <CopyLink roomId={roomData.roomId || ''} />
         </div>
 
         <BottomButton

@@ -3,9 +3,10 @@ import { toast } from 'sonner';
 
 type Props = {
   roomId: string;
+  desc?: boolean;
 };
 
-const CopyLink: FC<Props> = ({ roomId }) => {
+const CopyLink: FC<Props> = ({ roomId, desc = true }) => {
   const shareUrl = `${window.location.origin}/vote/${roomId}`;
 
   const handleCopyLink = async () => {
@@ -21,7 +22,7 @@ const CopyLink: FC<Props> = ({ roomId }) => {
 
   return (
     <div className="space-y-2 pt-4 px-5">
-      <p className="text-center text-xs text-(--text-sub)">아래 박스를 누르면 링크가 바로 복사됩니다.</p>
+      {desc && <p className="text-center text-xs text-(--text-sub)">아래 박스를 누르면 링크가 바로 복사됩니다.</p>}
       <div
         className="flex items-center justify-between p-4 bg-white border border-(--border-color) rounded-md shadow-sm active:scale-95 transition-transform cursor-pointer"
         onClick={handleCopyLink}
