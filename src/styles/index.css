@@ -56,6 +56,19 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'NexonMaplestory';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff') format('woff');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'KotraHope';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
 
 * {
     box-sizing: border-box;
@@ -109,7 +122,7 @@
 }
 
 .mitmiFont {
-    font-family: MitmiFont;
+    font-family: 'KotraHope';
 }
 
 .customInput {

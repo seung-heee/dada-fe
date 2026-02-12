@@ -13,7 +13,7 @@ const OnBoardingPage = () => {
   }, [navigate]);
 
   return (
-    <div className="flex flex-col justify-center min-h-screen P-10 pl-10 text-5xl gap-2">
+    <div className="flex flex-col justify-center min-h-screen p-10 pl-4 text-5xl gap-2">
       <p className="animate-bounce text-emerald-400 text-7xl mitmiFont">DADA</p>
       <p className="animate-bounce mitmiFont">
         <span className="text-emerald-400 mitmiFont">다</span> 같이,

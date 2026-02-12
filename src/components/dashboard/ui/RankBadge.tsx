@@ -4,7 +4,7 @@ import type { FC } from 'react';
 
 type Props = {
   rank: number;
-  participationRate: number;
+  participationRate: number | string;
 };
 
 const RankBadge: FC<Props> = ({ rank, participationRate }) => {
@@ -27,9 +27,13 @@ const RankBadge: FC<Props> = ({ rank, participationRate }) => {
         ) : (
           <span className="bg-zinc-100 text-zinc-500 text-[11px] font-bold px-3 py-1 rounded-full">{rank}위</span>
         )}
-        <span className={cn('text-xs font-bold', rank === 1 ? 'text-emerald-600' : 'text-zinc-400')}>
-          참여율 {participationRate}%
-        </span>
+        {!!participationRate ? (
+          <></>
+        ) : (
+          <span className={cn('text-xs font-bold', rank === 1 ? 'text-emerald-600' : 'text-zinc-400')}>
+            참여율 {participationRate}%
+          </span>
+        )}
       </div>
     </>
   );

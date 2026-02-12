@@ -20,12 +20,21 @@ const ParticipationInfo: FC<Props> = ({ formattedFullDate, rank, weekday, availa
           ({weekday})
         </span>
       </div>
-      <p className="text-sm text-zinc-500 font-medium">
-        <span className={cn('font-extrabold text-base', rank === 1 ? 'text-emerald-600' : 'text-zinc-800')}>
-          {availableMembers.length}
-        </span>
-        /{totalMembers.length}명
-      </p>
+      {totalMembers.length === 0 ? (
+        <p className="text-sm text-zinc-500 font-medium">
+          <span className={cn('font-extrabold text-base mr-1', rank === 1 ? 'text-emerald-600' : 'text-zinc-800')}>
+            {availableMembers.length}
+          </span>
+          명 참여
+        </p>
+      ) : (
+        <p className="text-sm text-zinc-500 font-medium">
+          <span className={cn('font-extrabold text-base', rank === 1 ? 'text-emerald-600' : 'text-zinc-800')}>
+            {availableMembers.length}
+          </span>
+          /{totalMembers.length}명
+        </p>
+      )}
     </div>
   );
 };
