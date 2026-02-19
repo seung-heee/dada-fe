@@ -53,7 +53,7 @@ const VotingStep: FC<Props> = ({ candidateDates, memberName, onPrev, onNext }) =
           dates={candidateDates}
         />
 
-        <BottomButton type="submit" text="다음" onPrev={onPrev} />
+        <BottomButton type="submit" text="다음" onPrev={onPrev} disabled={watchedDates.length === 0} />
       </form>
     </div>
   );

@@ -15,7 +15,7 @@ const DashboardPage = () => {
   if (!dashboardData) return <></>;
 
   return (
-    <div>
+    <div className="mb-5">
       {dashboardData?.topSchedules?.length === 0 ? (
         <EmptyDashboard roomId={roomId || ''} meetingName={dashboardData.meetingName || ''} />
       ) : (

@@ -65,12 +65,12 @@ const SmartSummary: FC<Props> = ({ availableMembers, absentMembers, pendingMembe
       </div>
 
       {/* 2. 미투표자 (가장 아래에 캡션처럼) */}
-      {!isPerfect && pendingMembers.length > 0 && (
-        <div className="mt-1 pt-2.5 border-t border-zinc-50 flex gap-1.5 items-center text-[10px] text-zinc-400">
-          <span className="font-bold shrink-0 opacity-70">미투표</span>
-          <span className="truncate opacity-80">{pendingMembers.join(', ')}</span>
-        </div>
-      )}
+      {/*{!isPerfect && pendingMembers.length > 0 && (*/}
+      {/*  <div className="mt-1 pt-2.5 border-t border-zinc-50 flex gap-1.5 items-center text-[10px] text-zinc-400">*/}
+      {/*    <span className="font-bold shrink-0 opacity-70">미투표</span>*/}
+      {/*    <span className="truncate opacity-80">{pendingMembers.join(', ')}</span>*/}
+      {/*  </div>*/}
+      {/*)}*/}
     </div>
   );
 };

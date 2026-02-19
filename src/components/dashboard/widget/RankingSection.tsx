@@ -10,8 +10,6 @@ const RankingSection: FC<Props> = ({ dashboardData }) => {
   const topSchedules = dashboardData.topSchedules || [];
   const totalMembers = dashboardData.totalMembers;
 
-  console.log(dashboardData.votedMembers);
-
   return (
     <div className="flex flex-col gap-4 rounded-xl">
       {topSchedules.map((schedule: TopScheduleDto) => (

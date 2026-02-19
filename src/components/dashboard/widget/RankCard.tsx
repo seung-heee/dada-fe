@@ -17,8 +17,6 @@ const RankCard: FC<Props> = ({ rank, date, availableMembers, totalMembers, voted
   const pendingMembers = totalMembers.filter((m) => !votedMembers.includes(m));
   const participationRate = Math.round((availableMembers.length / totalMembers.length) * 100);
 
-  console.log(absentMembers, pendingMembers);
-
   const dateObj = new Date(date);
   const formattedFullDate = dateObj.toLocaleDateString('ko-KR', {
     year: '2-digit',
@@ -32,9 +30,11 @@ const RankCard: FC<Props> = ({ rank, date, availableMembers, totalMembers, voted
     <div
       className={cn(
         'relative w-full rounded-2xl p-4 mb-3 transition-all duration-300 overflow-hidden group border',
-        rank === 1
-          ? 'bg-linear-to-br from-white to-emerald-50 border-emerald-300 shadow-[0_4px_15px_-4px_rgba(16,185,129,0.25)]'
-          : 'bg-white border-zinc-100 shadow-sm',
+        rank === 1 &&
+          'bg-linear-to-br from-white to-emerald-50 border-emerald-300 shadow-[0_4px_15px_-4px_rgba(16,185,129,0.25)]',
+        rank === 2 && 'bg-linear-to-br from-white to-emerald-50/40 border-emerald-200 shadow-sm',
+        rank === 3 && 'bg-linear-to-br from-white to-zinc-50 border-emerald-100 shadow-sm',
+        rank > 3 && 'bg-white border-zinc-100 shadow-sm',
       )}
     >
       <RankBadge rank={rank} participationRate={participationRate} />
