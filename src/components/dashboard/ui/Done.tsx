@@ -8,7 +8,7 @@ const Done: FC<Props> = ({ votedMembers }) => {
   return (
     <div className="flex flex-wrap items-center gap-1.5">
       <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest mr-2 px-1 w-8">Done</span>
-      {votedMembers!.length > 0 ? (
+      {votedMembers!.length > 0 && (
         <>
           {votedMembers!.map((name) => (
             <div
@@ -20,10 +20,6 @@ const Done: FC<Props> = ({ votedMembers }) => {
             </div>
           ))}
         </>
-      ) : (
-        <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mr-2 px-1">
-          아직 투표를 완료한 사람이 없습니다.
-        </span>
       )}
     </div>
   );

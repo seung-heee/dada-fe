@@ -8,7 +8,7 @@ type Props = {
 };
 
 const DashboardHeader: FC<Props> = ({ dashboardData }) => {
-  const { meetingName, totalMembers, votedMembers } = dashboardData;
+  const { meetingName, totalMembers, votedMembers, hasInvitedMembers } = dashboardData;
 
   const votedSet = new Set(votedMembers);
   const nonParticipants = totalMembers?.filter((name) => !votedSet.has(name)) || [];
@@ -19,7 +19,7 @@ const DashboardHeader: FC<Props> = ({ dashboardData }) => {
 
       <div className="bg-white/30 backdrop-blur-md border border-zinc-100/50 rounded-xl p-3 shadow-sm space-y-4">
         <Done votedMembers={votedMembers || []} />
-        <Wait nonParticipants={nonParticipants || []} />
+        {hasInvitedMembers && <Wait nonParticipants={nonParticipants || []} />}
       </div>
     </header>
   );

@@ -10,15 +10,18 @@ const RankingSection: FC<Props> = ({ dashboardData }) => {
   const topSchedules = dashboardData.topSchedules || [];
   const totalMembers = dashboardData.totalMembers;
 
+  console.log(dashboardData.votedMembers);
+
   return (
     <div className="flex flex-col gap-4 rounded-xl">
-      {topSchedules.map((schedule: TopScheduleDto, index: number) => (
+      {topSchedules.map((schedule: TopScheduleDto) => (
         <RankCard
           key={schedule.date}
-          rank={index + 1}
+          rank={schedule.rank || 1}
           date={schedule.date || ''}
           availableMembers={schedule.availableMembers || []}
           totalMembers={totalMembers || []}
+          votedMembers={dashboardData.votedMembers || []}
         />
       ))}
     </div>

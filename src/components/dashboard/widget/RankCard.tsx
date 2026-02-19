@@ -9,11 +9,15 @@ interface Props {
   date: string;
   availableMembers: string[];
   totalMembers: string[];
+  votedMembers: string[];
 }
 
-const RankCard: FC<Props> = ({ rank, date, availableMembers, totalMembers }) => {
-  const missingMembers = totalMembers.filter((m) => !availableMembers.includes(m));
+const RankCard: FC<Props> = ({ rank, date, availableMembers, totalMembers, votedMembers }) => {
+  const absentMembers = votedMembers.filter((m) => !availableMembers.includes(m));
+  const pendingMembers = totalMembers.filter((m) => !votedMembers.includes(m));
   const participationRate = Math.round((availableMembers.length / totalMembers.length) * 100);
+
+  console.log(absentMembers, pendingMembers);
 
   const dateObj = new Date(date);
   const formattedFullDate = dateObj.toLocaleDateString('ko-KR', {
@@ -21,6 +25,7 @@ const RankCard: FC<Props> = ({ rank, date, availableMembers, totalMembers }) => 
     month: 'long',
     day: 'numeric',
   });
+
   const weekday = dateObj.toLocaleDateString('ko-KR', { weekday: 'short' });
 
   return (
@@ -42,7 +47,7 @@ const RankCard: FC<Props> = ({ rank, date, availableMembers, totalMembers }) => 
         totalMembers={totalMembers}
       />
 
-      <SmartSummary missingMembers={missingMembers} />
+      <SmartSummary availableMembers={availableMembers} absentMembers={absentMembers} pendingMembers={pendingMembers} />
     </div>
   );
 };

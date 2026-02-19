@@ -21,7 +21,7 @@ const CopyLink: FC<Props> = ({ roomId, desc = true }) => {
   };
 
   return (
-    <div className="space-y-2 pt-4 px-5">
+    <div className="space-y-2 pt-4">
       {desc && <p className="text-center text-xs text-(--text-sub)">아래 박스를 누르면 링크가 바로 복사됩니다.</p>}
       <div
         className="flex items-center justify-between p-4 bg-white border border-(--border-color) rounded-md shadow-sm active:scale-95 transition-transform cursor-pointer"
