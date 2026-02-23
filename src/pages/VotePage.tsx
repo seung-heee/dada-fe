@@ -61,6 +61,7 @@ const VotePage = () => {
           }}
           memberName={memberData.name}
           invitedMembers={roomInfo?.data.invitedMembers}
+          participantNames={roomInfo?.data.participantNames}
         />
       )}
 

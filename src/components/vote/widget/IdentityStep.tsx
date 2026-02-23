@@ -7,12 +7,14 @@ import Question from '@/components/shared/Question.tsx';
 import RHFInput from '@/components/shared/RHF/RHFInput.tsx';
 import BottomButton from '@/components/shared/BottomButton.tsx';
 import MemberBadge from '@/components/vote/ui/MemberBadge.tsx';
+import { toast } from 'sonner';
 
 type Props = {
   onPrev: () => void;
   onNext: (name: string) => void;
   memberName: string;
   invitedMembers?: string[]; // 방장이 입력한 멤버 명단
+  participantNames?: string[];
 };
 
 const memberNameSchema = z.object({
@@ -25,7 +27,7 @@ const memberNameSchema = z.object({
 
 type memberNameFormValue = z.infer<typeof memberNameSchema>;
 
-const IdentityStep: FC<Props> = ({ onPrev, onNext, memberName, invitedMembers = [] }) => {
+const IdentityStep: FC<Props> = ({ onPrev, onNext, memberName, invitedMembers = [], participantNames = [] }) => {
   const hasInvitedList = invitedMembers.length > 0;
   const [selectedName, setSelectedName] = useState<string>(memberName || '');
   const {
@@ -43,6 +45,14 @@ const IdentityStep: FC<Props> = ({ onPrev, onNext, memberName, invitedMembers = 
   };
 
   const handleBadgeClick = (name: string) => {
+    const alreadyVotedMembers = participantNames.includes(name);
+
+    if (alreadyVotedMembers) {
+      toast('⚠️ 이미 투표에 참여한 사용자입니다.', {
+        description: '재투표 시 이전 기록을 덮어쓰게 됩니다.',
+      });
+    }
+
     setSelectedName(name);
   };
 

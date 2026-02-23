@@ -14,10 +14,8 @@ const EmptyDashboard: FC<Props> = ({ roomId, meetingName }) => {
         <h1 className="text-2xl font-black text-zinc-900 tracking-tight leading-tight mb-4 italic">{meetingName}</h1>
       </header>
 
-      <div className="grow flex flex-col">
-        {/* 2. Lottie 애니메이션: 적절한 크기 조절 */}
+      <div className="grow flex flex-col justify-center">
         <div className="relative w-40 h-40 mx-auto">
-          {/* 배경에 은은한 빛 효과 추가 */}
           <div className="absolute inset-0 bg-emerald-200/30 blur-2xl rounded-full transform scale-75 -z-10"></div>
           <DotLottieReact
             src="https://lottie.host/f33d8dd8-e12f-4791-b726-9ac9731c2586/jU5jaId2E4.lottie"
@@ -27,7 +25,6 @@ const EmptyDashboard: FC<Props> = ({ roomId, meetingName }) => {
           />
         </div>
 
-        {/* 3. 텍스트 메시지: 힙한 메인 타이틀 + 친절한 서브 텍스트로 분리 */}
         <div className="space-y-2 max-w-md text-center mx-auto">
           <h3 className="text-xl font-bold text-zinc-800">아직 정적이 흐르는 중... 🍃</h3>
           <p className="text-sm text-zinc-500 leading-relaxed">
@@ -37,9 +34,8 @@ const EmptyDashboard: FC<Props> = ({ roomId, meetingName }) => {
         </div>
       </div>
 
-      {/* 4. 링크 복사 버튼: 기존 컴포넌트 활용 */}
       <div className="pt-2 pb-10">
-        <CopyLink roomId={roomId || ''} />
+        <CopyLink roomId={roomId || ''} desc={false} />
       </div>
     </div>
   );
