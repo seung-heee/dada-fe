@@ -48,7 +48,7 @@ const IdentityStep: FC<Props> = ({ onPrev, onNext, memberName, invitedMembers = 
     const alreadyVotedMembers = participantNames.includes(name);
 
     if (alreadyVotedMembers) {
-      toast('⚠️ 이미 투표에 참여한 사용자입니다.', {
+      toast(`⚠️ ${name}님은 이미 투표를 완료하셨습니다.`, {
         description: '재투표 시 이전 기록을 덮어쓰게 됩니다.',
       });
     }
