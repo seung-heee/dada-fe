@@ -4,13 +4,14 @@ import { useGetDashboard } from '@/api/generated/room/room.ts';
 import { useParams } from 'react-router';
 import type { DashboardResponse } from '@/api/generated/model';
 import EmptyDashboard from '@/components/dashboard/ui/EmptyDashboard.tsx';
+import LoadingPage from '@/pages/LoadingPage.tsx';
 
 const DashboardPage = () => {
   const { roomId } = useParams();
   const { data, isLoading } = useGetDashboard(roomId as string);
   const dashboardData = data?.data as DashboardResponse;
 
-  if (isLoading) return <>로딩중...</>;
+  if (isLoading) return <LoadingPage />;
 
   if (!dashboardData) return <></>;
 

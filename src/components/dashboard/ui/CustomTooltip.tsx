@@ -1,4 +1,4 @@
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = ({ active, payload, totalMembers }: any) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
 
@@ -10,12 +10,18 @@ const CustomTooltip = ({ active, payload }: any) => {
           <p className=" font-bold">
             참여 ({data.참여}명): <span className="font-medium text-zinc-500">{data.availableList || '없음'}</span>
           </p>
-          <p className=" font-bold">
-            불참 ({data.불참}명): <span className="font-medium text-zinc-500">{data.absentList || '없음'}</span>
-          </p>
-          <p className=" font-bold">
-            미투표 ({data.미투표}명): <span className="font-medium text-zinc-500">{data.pendingList || '없음'}</span>
-          </p>
+
+          {!!totalMembers.length && (
+            <>
+              <p className=" font-bold">
+                불참 ({data.불참}명): <span className="font-medium text-zinc-500">{data.absentList || '없음'}</span>
+              </p>
+              <p className=" font-bold">
+                미투표 ({data.미투표}명):{' '}
+                <span className="font-medium text-zinc-500">{data.pendingList || '없음'}</span>
+              </p>
+            </>
+          )}
         </div>
       </div>
     );

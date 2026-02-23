@@ -5,11 +5,13 @@ import VotePage from '@/pages/VotePage.tsx';
 import DashboardPage from '@/pages/DashboardPage.tsx';
 import OnBoardingPage from '@/pages/OnBoardingPage.tsx';
 import NotFoundPage from '@/pages/NotFoundPage.tsx';
+import ErrorPage from '@/pages/ErrorPage.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     Component: RootLayout,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, Component: OnBoardingPage },
       { path: 'create-room', Component: CreateRoomPage },
