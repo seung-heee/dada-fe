@@ -5,6 +5,7 @@ import VotingStep from '@/components/vote/widget/VotingStep.tsx';
 import DoneStep from '@/components/vote/widget/DoneStep.tsx';
 import { useGetRoom, useVoteForRoom } from '@/api/generated/room/room.ts';
 import { Navigate, useParams } from 'react-router';
+import LoadingPage from '@/pages/LoadingPage.tsx';
 
 type VoteStep = 'INTRO' | 'NAME' | 'VOTING' | 'DONE';
 
@@ -29,7 +30,7 @@ const VotePage = () => {
     },
   });
 
-  if (isLoading) return <>로딩중...</>;
+  if (isLoading) return <LoadingPage />;
 
   if (isError || !roomInfo?.data) {
     return <Navigate to="/404" replace />;
