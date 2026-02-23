@@ -3,8 +3,10 @@ import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Question from '@/components/shared/Question.tsx';
 import BottomButton from '@/components/shared/BottomButton.tsx';
-import type { FC } from 'react';
+import { type FC, useState } from 'react';
 import RHFCalendar from '@/components/shared/RHF/RHFCalendar.tsx';
+import { getRecurringDates } from '@/components/createRoom/selectRecurringDays.ts';
+import QuickSelectButtons from '@/components/createRoom/ui/QuickSelectButtons.tsx';
 
 type Props = {
   meetingName: string;
@@ -20,7 +22,8 @@ const calendarSchema = z.object({
 type CalendarFormValues = z.infer<typeof calendarSchema>;
 
 const CalendarStep: FC<Props> = ({ meetingName, onPrev, onNext, isLoading }) => {
-  const { control, handleSubmit } = useForm<CalendarFormValues>({
+  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
+  const { control, handleSubmit, setValue } = useForm<CalendarFormValues>({
     resolver: zodResolver(calendarSchema),
     defaultValues: {
       selectedDates: [],
@@ -38,6 +41,23 @@ const CalendarStep: FC<Props> = ({ meetingName, onPrev, onNext, isLoading }) => 
     onNext(formattedDates);
   };
 
+  const handleAutoSelect = (value: number | 'weekend') => {
+    const recurringDates = getRecurringDates(value, currentMonth);
+
+    const isAllSelected = recurringDates.every((rd) => watchedDates.some((wd) => wd.getTime() === rd.getTime()));
+
+    let nextDates: Date[];
+
+    if (isAllSelected) {
+      nextDates = watchedDates.filter((wd) => !recurringDates.some((rd) => rd.getTime() === wd.getTime()));
+    } else {
+      const missingDates = recurringDates.filter((rd) => !watchedDates.some((wd) => wd.getTime() === rd.getTime()));
+      nextDates = [...watchedDates, ...missingDates];
+    }
+
+    setValue('selectedDates', nextDates, { shouldValidate: true });
+  };
+
   return (
     <>
       <Question
@@ -45,8 +65,16 @@ const CalendarStep: FC<Props> = ({ meetingName, onPrev, onNext, isLoading }) => 
         subTitle="후보가 많을수록 모임 성사 확률도 상한가! 다다익선 아시죠?"
       />
 
+      <QuickSelectButtons onSelect={handleAutoSelect} watchedDates={watchedDates} currentMonth={currentMonth} />
+
       <form onSubmit={handleSubmit(onSubmit)}>
-        <RHFCalendar name="selectedDates" control={control} selectedLength={watchedDates.length} />
+        <RHFCalendar
+          name="selectedDates"
+          control={control}
+          selectedLength={watchedDates.length}
+          currentMonth={currentMonth}
+          onMonthChange={setCurrentMonth}
+        />
         <BottomButton
           text="완료"
           onPrev={onPrev}

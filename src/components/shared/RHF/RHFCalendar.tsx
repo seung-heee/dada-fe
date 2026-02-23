@@ -9,9 +9,11 @@ interface Props {
   control: Control<any>;
   dates?: string[];
   selectedLength: number;
+  currentMonth?: Date;
+  onMonthChange?: (date: Date) => void;
 }
 
-const RHFCalendar: FC<Props> = ({ name, control, dates, selectedLength }) => {
+const RHFCalendar: FC<Props> = ({ name, control, dates, selectedLength, currentMonth, onMonthChange }) => {
   const {
     field: { value, onChange },
   } = useController({
@@ -35,6 +37,8 @@ const RHFCalendar: FC<Props> = ({ name, control, dates, selectedLength }) => {
           onSelect={onChange}
           className="w-full text-lg my-5 rounded-md"
           disabled={dates?.length ? isDateDisabled : defaultDisabled}
+          month={currentMonth}
+          onMonthChange={onMonthChange}
         />
       </div>
 

@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import type { DashboardResponse, TopScheduleDto } from '@/api/generated/model';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
+import CustomTooltip from '@/components/dashboard/ui/CustomTooltip.tsx';
 
 type Props = {
   dashboardData: DashboardResponse;
@@ -15,7 +16,7 @@ const RankingSection: FC<Props> = ({ dashboardData }) => {
     const dateObj = new Date(schedule.date as string);
     const dayOfWeek = new Intl.DateTimeFormat('ko-KR', { weekday: 'short' }).format(dateObj);
 
-    // 이름 리스트 계산 🛫
+    // 이름 리스트 계산
     const availableNames = schedule.availableMembers ?? [];
     const absentNames = votedMembers.filter((m) => !availableNames.includes(m));
     const pendingNames = totalMembers.filter((m) => !votedMembers.includes(m));
@@ -35,12 +36,11 @@ const RankingSection: FC<Props> = ({ dashboardData }) => {
     <div className="w-full bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <h3 className="font-bold text-zinc-800 text-lg">참여 현황 요약 📊</h3>
-        <p className="text-[11px] text-zinc-400 font-medium">DADA가 찾은 최적의 날짜, 그래프로 비교해 보세요.</p>
+        <p className="text-[11px] text-zinc-400 font-medium">DADA의 분석 결과, 가장 모이기 좋은 TOP 10 날짜입니다.</p>
       </div>
 
-      <div className="w-full h-64 mt-2">
+      <div className="w-full h-100 mt-2">
         <ResponsiveContainer width="100%" height="100%">
-          {/* 1. layout="vertical" 추가 */}
           <BarChart layout="vertical" data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }} barSize={24}>
             <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f4f4f5" />
             <XAxis type="number" domain={[0, totalMembers.length]} hide />
@@ -78,28 +78,3 @@ const RankingSection: FC<Props> = ({ dashboardData }) => {
 };
 
 export default RankingSection;
-
-const CustomTooltip = ({ active, payload }: any) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload; // 우리가 chartData에 넣은 원본 데이터
-
-    return (
-      <div className="bg-white p-3 rounded-xl border border-zinc-100 shadow-lg text-[11px] flex flex-col gap-1 min-w-[140px]">
-        <p className="font-bold text-zinc-800 border-b border-zinc-50 pb-1">{data.date}</p>
-
-        <div className="flex flex-col gap-[0.5]">
-          <p className=" font-bold">
-            참여 ({data.참여}명): <span className="font-medium text-zinc-500">{data.availableList || '없음'}</span>
-          </p>
-          <p className=" font-bold">
-            불참 ({data.불참}명): <span className="font-medium text-zinc-500">{data.absentList || '없음'}</span>
-          </p>
-          <p className=" font-bold">
-            미투표 ({data.미투표}명): <span className="font-medium text-zinc-500">{data.pendingList || '없음'}</span>
-          </p>
-        </div>
-      </div>
-    );
-  }
-  return null;
-};
